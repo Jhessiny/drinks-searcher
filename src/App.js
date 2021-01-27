@@ -38,7 +38,7 @@ class App extends Component {
   }
 
   surpriseme=async()=> {
-     this.setState({isFetching: true})
+     this.setState({isFetching: true, type: 's'})
       const url = "https://www.thecocktaildb.com/api/json/v1/1/random.php"
       const fetchedData = await fetchData(this.state.search, null, null , url);
         this.setState({ drinks: fetchedData });
