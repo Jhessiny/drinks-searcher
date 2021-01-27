@@ -1,19 +1,19 @@
 import React from 'react'
 import "./Header.scss"
 
-const Header = () => {
+const Header = (props) => {
     return ( 
         <header>
-            Header
-            <form>
-                 <input placeholder="Type a drink"/>
-                 <select>
-                     <option>Search by drink name</option>
-                     <option>Search by ingredient</option>
+            Drinks' Searcher
+            <form onSubmit={(e)=> props.submit(e)}>
+                 <input placeholder="Type a drink" value={props.search} onChange={(e)=> props.changeInput(e)}/>
+                 <select onChange={(e)=> props.changeType(e)}>
+                     <option value="s">Search by drink name</option>
+                     <option value="i">Search by ingredient</option>
                  </select>
-                 <input type="submit" value="search"/>
+                 <input type="submit" value="search" className="header-btn"/>
             </form>
-            <input type="button" value="surprise-me"/>
+            <input type="button" className="header-btn" value="SURPRISE ME" onClick={props.surpriseme}/>
            
         </header>
      );

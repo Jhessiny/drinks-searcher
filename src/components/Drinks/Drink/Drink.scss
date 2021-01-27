@@ -1,14 +1,23 @@
 .drink-box{
-    background-color: #19323C;
-    background-color: #F3F7F0;
-    box-shadow: 0 3px 6px rgba(0,0,0,.5);
     width: 30%;
-    color: #F3F7F0;
     color: #19323C;
-    // paddi;ng: 5px;
-    margin-bottom: 25px;
-    border-radius: 10px;
-    overflow: hidden;
+    margin-bottom: 40px;
+    position: relative;
+    min-height: 410px;
+    perspective: 150rem;
+  -moz-perspective: 150rem;
+
+  &:hover .front-side{
+    transform-style: preserve-3d;
+    transform: rotateY(-180deg);
+    transition: .4s;
+    }
+
+    &:hover .back-side{
+        transform-style: preserve-3d;
+        transform: rotateY(0);
+        transition: .4s;
+    }
 
     img{
         width: 100%;
@@ -18,10 +27,41 @@
     h3{
         text-align: center;
         display: block;
-        padding: 25px 0;
+        padding: 20px 0 10px 0;
     }
-    &:hover{
+    .box-side{
+        position: absolute;
+        top: 0;
+        left: 0;
+        backface-visibility: hidden;
+        background-color: #F3F7F0;
+        width: 100%;
+        min-height: 410px;
+        box-shadow: 0 3px 6px rgba(0,0,0,.5);
+        overflow: hidden;
+        border-radius: 10px;
+
+    }
+
+    .front-side{
+        transition: .4s;
+    }
+
+    .back-side{
         transform: rotateY(180deg);
-        transition: .5s;
+        transition: .4s;
+        padding: 0 20px;
+        font-size: 1.4rem;
+     
+        .ing-list{
+            list-style: none;
+            margin-bottom: 10px;
+        }
+
+        h4{
+            margin-bottom: 5px;
+        }
     }
+    
+ 
 }
