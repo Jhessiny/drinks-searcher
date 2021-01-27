@@ -1,0 +1,20 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html{
+    font-size: 62.5%;
+}
+
+body{
+    font-size: 1.6rem;
+    background-color: #8C5E58;
+    font-family: Arial, Helvetica, sans-serif;
+
+    .container{
+        max-width: 1100px;
+        margin: auto;
+    }
+}

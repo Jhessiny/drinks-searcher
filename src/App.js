@@ -1,25 +1,31 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { Component } from "react";
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+import { fetchData } from "./api";
+import Drinks from "./components/Drinks/Drinks";
+import Header from './components/Header/Header'
+
+class App extends Component {
+  state = {
+    drinks: {},
+  };
+  async componentDidMount() {
+    const fetchedData = await fetchData();
+    this.setState({ drinks: fetchedData });
+    console.log("data", this.state.data);
+  }
+
+  render() {
+    const { drinks } = this.state;
+
+    return (
+      <React.Fragment>
+        <Header/>
+        <div className="container">
+            <Drinks drinks={drinks} />
+        </div>
+       </React.Fragment>
+    );
+  }
 }
 
 export default App;

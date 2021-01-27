@@ -1,0 +1,26 @@
+header{
+    background-color: #19323C;
+    background: rgb(25,50,60);
+background: linear-gradient(90deg, rgba(25,50,60,1) 0%, rgba(46,79,92,1) 60%, rgba(71,111,126,1) 100%);
+    padding: 10px;
+    color: #F3F7F0;
+    margin-bottom: 7rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    form{
+        input, select{
+            margin-left: 5px;
+        }
+    }
+
+    input, select, ::placeholder{
+        background-color: #19323C;
+        color: #F3F7F0;
+        border: none;
+        padding: 5px;
+        height: 30px;
+
+    }
+}

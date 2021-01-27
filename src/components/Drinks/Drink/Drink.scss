@@ -1,0 +1,27 @@
+.drink-box{
+    background-color: #19323C;
+    background-color: #F3F7F0;
+    box-shadow: 0 3px 6px rgba(0,0,0,.5);
+    width: 30%;
+    color: #F3F7F0;
+    color: #19323C;
+    // paddi;ng: 5px;
+    margin-bottom: 25px;
+    border-radius: 10px;
+    overflow: hidden;
+
+    img{
+        width: 100%;
+        // border-radius: 100%;
+    }
+
+    h3{
+        text-align: center;
+        display: block;
+        padding: 25px 0;
+    }
+    &:hover{
+        transform: rotateY(180deg);
+        transition: .5s;
+    }
+}
