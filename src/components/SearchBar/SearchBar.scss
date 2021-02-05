@@ -1,0 +1,37 @@
+.searchBar {
+  background-color: #eeeeee;
+  width: 100%;
+  margin-bottom: 3rem;
+  display: flex;
+  justify-content: space-between;
+  padding: 10px 30px;
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.3);
+
+  form {
+    input,
+    select {
+      margin-left: 5px;
+    }
+  }
+
+  input,
+  select,
+  ::placeholder {
+    background-color: #19323c;
+    color: #f3f7f0;
+    border: none;
+    padding: 5px;
+    height: 30px;
+  }
+  .header-btn {
+    outline: none;
+    cursor: pointer;
+    transform: scale(1);
+    transition: 0.1s;
+
+    &:hover {
+      transform: scale(1.1);
+      transition: 0.1s;
+    }
+  }
+}

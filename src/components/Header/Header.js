@@ -1,22 +1,27 @@
-import React from 'react'
-import "./Header.scss"
+import React from "react";
+import { Link } from "react-router-dom";
+import "./Header.scss";
 
 const Header = (props) => {
-    return ( 
-        <header>
-            Drinks' Searcher
-            <form onSubmit={(e)=> props.submit(e)}>
-                 <input placeholder="Type a drink" value={props.search} onChange={(e)=> props.changeInput(e)}/>
-                 <select onChange={(e)=> props.changeType(e)}>
-                     <option value="s">Search by drink name</option>
-                     <option value="i">Search by ingredient</option>
-                 </select>
-                 <input type="submit" value="search" className="header-btn"/>
-            </form>
-            <input type="button" className="header-btn" value="SURPRISE ME" onClick={props.surpriseme}/>
-           
-        </header>
-     );
-}
- 
+  return (
+    <header>
+      <h1>
+        <Link to="/">Drinks' Searcher</Link>
+      </h1>
+      {props.isAuth && (
+        <>
+          <nav>
+            <Link className="nav-item" to="/">
+              <i class="fa fa-search"></i>
+            </Link>
+            <Link className="nav-item" to="/user/:id">
+              <i class="fa fa-user"></i>
+            </Link>
+          </nav>
+        </>
+      )}
+    </header>
+  );
+};
+
 export default Header;
