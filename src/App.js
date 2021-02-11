@@ -100,7 +100,6 @@ const App = () => {
   const toggleFavorite = (id, drinkName) => {
     if (favoritesIds.indexOf(id) != -1) {
       const deletedFav = favorites.filter((fav) => fav.drinkId === id);
-      console.log("deleting", deletedFav[0].firebaseId);
       axios.delete(
         `https://drinks-search-default-rtdb.firebaseio.com/users/sdsd/drinks/${deletedFav[0].firebaseId}.json`
       );

@@ -19,11 +19,13 @@ const Header = ({ isAuth, logout }) => {
               <div className="menu-drop">
                 <ul>
                   <li>
-                    <Link className="drop-link" to="/user/:id">
+                    <Link className="drop-link li-item" to="/user/:id">
                       Profile
                     </Link>
                   </li>
-                  <li onClick={logout}>Logout</li>
+                  <li className="li-item" onClick={logout}>
+                    Logout
+                  </li>
                 </ul>
               </div>
             </div>
