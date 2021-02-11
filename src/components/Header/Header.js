@@ -2,21 +2,31 @@ import React from "react";
 import { Link } from "react-router-dom";
 import "./Header.scss";
 
-const Header = (props) => {
+const Header = ({ isAuth, logout }) => {
   return (
     <header>
       <h1>
         <Link to="/">Drinks' Searcher</Link>
       </h1>
-      {props.isAuth && (
+      {isAuth && (
         <>
           <nav>
             <Link className="nav-item" to="/">
-              <i class="fa fa-search"></i>
+              <i className="fa fa-search"></i>
             </Link>
-            <Link className="nav-item" to="/user/:id">
-              <i class="fa fa-user"></i>
-            </Link>
+            <div className="menu-user nav-item">
+              <i className="fa fa-user"></i>
+              <div className="menu-drop">
+                <ul>
+                  <li>
+                    <Link className="drop-link" to="/user/:id">
+                      Profile
+                    </Link>
+                  </li>
+                  <li onClick={logout}>Logout</li>
+                </ul>
+              </div>
+            </div>
           </nav>
         </>
       )}

@@ -17,8 +17,50 @@ header {
     color: #eee;
     text-decoration: none;
   }
+
+  nav {
+    display: flex;
+    padding-right: 10px;
+  }
   .nav-item {
-    padding: 0 10px;
+    padding: 0px 15px;
     font-size: 1.8rem;
+  }
+  .fa {
+    cursor: pointer;
+    padding: 10px 10px;
+  }
+  .fa-user:hover + .menu-drop,
+  .menu-drop:hover {
+    visibility: visible;
+  }
+  .menu-user {
+    position: relative;
+  }
+  .menu-drop {
+    position: absolute;
+    top: 30px;
+    right: 20px;
+    background-color: #eee;
+    color: #444;
+    z-index: 100;
+    visibility: hidden;
+    box-shadow: 0 3px 3px rgba(97, 97, 97, 0.363);
+
+    li {
+      padding: 10px 20px;
+      &:hover {
+        background-color: #ddd;
+        cursor: pointer;
+      }
+    }
+
+    a.drop-link {
+      color: #444;
+    }
+
+    ul {
+      list-style: none;
+    }
   }
 }

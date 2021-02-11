@@ -10,6 +10,8 @@ const DrinksContainer = ({
   favoritesIds,
   toggleFavorite,
 }) => {
+  console.log("drinkscont", isAuth);
+
   return (
     <div className="container">
       {!isAuth ? (
