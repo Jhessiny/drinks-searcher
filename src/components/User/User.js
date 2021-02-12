@@ -1,12 +1,11 @@
 import "./User.scss";
 import { fetchData } from "../../api";
-import React, { Fragment, useState } from "react";
+import React, { Fragment, useEffect, useState } from "react";
 import { Redirect } from "react-router-dom";
 import FavDrink from "../FavDrink/FavDrink";
 
 const User = (props) => {
   const { favorites, isAuth } = props;
-  console.log(favorites);
 
   const [showDrink, setShowDrink] = useState(false);
   const [favDrinkShowed, setFavDrinkShowed] = useState({});

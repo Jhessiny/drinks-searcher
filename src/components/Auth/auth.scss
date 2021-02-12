@@ -7,6 +7,7 @@
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
+  animation: loginShown 0.5s;
 
   form {
     padding-top: 30px;
@@ -96,6 +97,16 @@
     opacity: 1;
   }
 
+  .input-box-select select {
+    display: inline-block;
+    // border: 1px solid #444;
+    border: none;
+    background-color: #ddd;
+    width: 100%;
+    margin-bottom: 10px;
+    padding: 10px;
+  }
+
   .btn-auth {
     background: #19323c;
     color: #eee;
@@ -122,5 +133,76 @@
     &:hover {
       text-decoration: underline;
     }
+  }
+}
+
+.login-box-hidden {
+  left: -50%;
+  animation: loginHidden 0.5s;
+}
+
+.signup-box {
+  animation: signUpHidden 0.5s;
+  top: 55%;
+  left: 85%;
+  transform: translate(-50%, -50%);
+  display: none;
+}
+
+.signup-box-shown {
+  left: 50%;
+  display: block;
+  animation: signUpShown 0.5s;
+}
+
+@keyframes loginHidden {
+  from {
+    left: 50%;
+    opacity: 1;
+    display: block;
+  }
+  to {
+    left: -10%;
+    opacity: 0;
+    display: none;
+  }
+}
+
+@keyframes signUpShown {
+  from {
+    left: 85%;
+    opacity: 0;
+    display: none;
+  }
+  to {
+    left: 50%;
+    opacity: 1;
+    display: block;
+  }
+}
+
+@keyframes loginShown {
+  from {
+    left: -10%;
+    opacity: 0;
+    display: none;
+  }
+  to {
+    left: 50%;
+    opacity: 1;
+    display: block;
+  }
+}
+
+@keyframes signUpHidden {
+  from {
+    left: 50%;
+    opacity: 1;
+    display: block;
+  }
+  to {
+    left: 85%;
+    opacity: 0;
+    display: none;
   }
 }

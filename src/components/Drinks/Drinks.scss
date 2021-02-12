@@ -1,14 +1,40 @@
-.drinks-list{
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-between;
+.drinks-list {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
 }
 
-.p-center{
-    display: block;
-    width: 100%;
-    text-align: center;
-    color: #eeeeee;
-    font-size: 1.8rem;
-    margin-bottom: 2rem;
+.p-center {
+  display: block;
+  width: 100%;
+  text-align: center;
+  font-size: 1.8rem;
+  margin-bottom: 2rem;
 }
+
+@media (max-width: 1100px) {
+  .drinks-list {
+    justify-content: space-around;
+    padding: 0 5rem;
+  }
+}
+
+@media (max-width: 820px) {
+  .drinks-list {
+    // justify-content: center;
+    padding: 0 2rem;
+  }
+}
+
+@media (max-width: 670px) {
+  .drinks-list {
+    justify-content: center;
+    padding: 0 2rem;
+  }
+}
+
+// @media (max-width: 720px) {
+//   .drink-box {
+//     width: 100%;
+//   }
+// }

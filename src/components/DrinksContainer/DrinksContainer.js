@@ -1,5 +1,6 @@
 import { Redirect } from "react-router-dom";
 import Drinks from "../Drinks/Drinks";
+import SearchBar from "../SearchBar/SearchBar";
 
 const DrinksContainer = ({
   isFetching,
@@ -9,23 +10,39 @@ const DrinksContainer = ({
   isAuth,
   favoritesIds,
   toggleFavorite,
+  search,
+  changeType,
+  changeInput,
+  submit,
+  surpriseme,
 }) => {
   return (
-    <div className="container">
-      {!isAuth ? (
-        <Redirect to="/auth" />
-      ) : !isFetching ? (
-        <Drinks
-          drinks={drinks}
-          surprise={surprise}
-          type={type}
-          favoritesIds={favoritesIds}
-          toggleFavorite={toggleFavorite}
+    <>
+      {isAuth && (
+        <SearchBar
+          search={search}
+          changeType={changeType}
+          changeInput={changeInput}
+          submit={(e) => submit(e)}
+          surpriseme={surpriseme}
         />
-      ) : (
-        <div className="loader">Loading...</div>
       )}
-    </div>
+      <div className="container">
+        {!isAuth ? (
+          <Redirect to="/auth" />
+        ) : !isFetching ? (
+          <Drinks
+            drinks={drinks}
+            surprise={surprise}
+            type={type}
+            favoritesIds={favoritesIds}
+            toggleFavorite={toggleFavorite}
+          />
+        ) : (
+          <div className="loader">Loading...</div>
+        )}
+      </div>
+    </>
   );
 };
 

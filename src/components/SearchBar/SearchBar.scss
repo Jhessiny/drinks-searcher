@@ -36,3 +36,24 @@
     }
   }
 }
+
+@media (max-width: 710px) {
+  .searchBar {
+    flex-direction: column;
+    padding: 2rem 0;
+  }
+
+  form:first-child {
+    border-bottom: 1px solid #444;
+    margin-bottom: 2rem;
+    padding: 0 0 1rem 0;
+  }
+  form {
+    max-width: 30rem;
+    margin: auto;
+  }
+  form * {
+    width: 100%;
+    margin-bottom: 0.4rem;
+  }
+}

@@ -6,31 +6,18 @@ import { fetchData } from "./api";
 import Auth from "./components/Auth/auth";
 import DrinksContainer from "./components/DrinksContainer/DrinksContainer";
 import Header from "./components/Header/Header";
-import SearchBar from "./components/SearchBar/SearchBar";
 import User from "./components/User/User";
 
 const App = () => {
   const [drinks, setDrinks] = useState({});
   const [search, setSearch] = useState("margarita");
-  const [beforeSubmitType, setBeforeSubmitType] = useState("");
+  const [beforeSubmitType, setBeforeSubmitType] = useState("s");
   const [type, setType] = useState("s");
   const [surprise, setSurprise] = useState(false);
   const [isFetching, setIsFetching] = useState(false);
-  const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [isAuthenticated, setIsAuthenticated] = useState(true);
   const [favoritesIds, setFavoritesIds] = useState([]);
   const [favorites, setFavorites] = useState([]);
-
-  // state = {
-  //   drinks: {},
-  //   search: "margarita",
-  //   beforeSubmitType: "",
-  //   type: "s",
-  //   surprise: false,
-  //   isFetching: false,
-  //   isAuthenticated: false,
-  //   favorites: [],
-  //   favoritesIds: [],
-  // };
 
   useEffect(() => {
     const fetchDataApi = async () => {
@@ -51,11 +38,11 @@ const App = () => {
           for (let fav in fetchedFavorites) {
             let newFav = {
               firebaseId: fav,
-              drinkId: fetchedFavorites[fav].id,
-              drinkName: fetchedFavorites[fav].name,
+              drinkId: fetchedFavorites[fav].drinkId,
+              drinkName: fetchedFavorites[fav].drinkName,
             };
             favoritesArray.push(newFav);
-            favoritesIdArray.push(fetchedFavorites[fav].id);
+            favoritesIdArray.push(fetchedFavorites[fav].drinkId);
           }
           setFavorites(favoritesArray);
           setFavoritesIds(favoritesIdArray);
@@ -64,7 +51,7 @@ const App = () => {
       setIsFetching(false);
     };
     fetchDataApi();
-  }, [search, type]);
+  }, []);
 
   const changeInput = (e) => {
     const newSearch = e.target.value;
@@ -99,20 +86,24 @@ const App = () => {
 
   const toggleFavorite = (id, drinkName) => {
     if (favoritesIds.indexOf(id) != -1) {
-      const deletedFav = favorites.filter((fav) => fav.drinkId === id);
+      const deletedFav = favorites.filter((fav) => fav.drinkId == id);
       axios.delete(
         `https://drinks-search-default-rtdb.firebaseio.com/users/sdsd/drinks/${deletedFav[0].firebaseId}.json`
       );
-      const newFavs = favorites.filter((fav) => fav.id != id);
+      const newFavs = favorites.filter((fav) => fav.drinkId != id);
       const newFavsId = favoritesIds.filter((favId) => favId != id);
       setFavoritesIds(newFavsId);
       setFavorites(newFavs);
     } else {
-      const newFav = { id: id, name: drinkName };
-      axios.post(
-        `https://drinks-search-default-rtdb.firebaseio.com/users/sdsd/drinks.json/`,
-        newFav
-      );
+      const newFav = { drinkId: id, drinkName: drinkName };
+      axios
+        .post(
+          `https://drinks-search-default-rtdb.firebaseio.com/users/sdsd/drinks.json/`,
+          newFav
+        )
+        .then((res) => {
+          newFav.firebaseId = res.data;
+        });
       const newFavs = [...favorites, newFav];
       const newFavsId = [...favoritesIds, id];
       setFavoritesIds(newFavsId);
@@ -131,15 +122,6 @@ const App = () => {
   return (
     <BrowserRouter>
       <Header isAuth={isAuthenticated} logout={logout} />
-      {isAuthenticated && (
-        <SearchBar
-          search={search}
-          changeType={changeType}
-          changeInput={changeInput}
-          submit={searchNewDrink}
-          surpriseme={surpriseme}
-        />
-      )}
 
       <Switch>
         <Route
@@ -155,6 +137,11 @@ const App = () => {
               favorites={favorites}
               favoritesIds={favoritesIds}
               toggleFavorite={toggleFavorite}
+              search={search}
+              changeType={changeType}
+              changeInput={changeInput}
+              submit={searchNewDrink}
+              surpriseme={surpriseme}
             />
           )}
         />
