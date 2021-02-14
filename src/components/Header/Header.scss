@@ -17,8 +17,58 @@ header {
     color: #eee;
     text-decoration: none;
   }
+  h1 {
+    font-weight: 400;
+  }
+
+  nav {
+    display: flex;
+    padding-right: 10px;
+  }
   .nav-item {
-    padding: 0 10px;
+    padding: 0px 15px;
     font-size: 1.8rem;
+  }
+  .fa {
+    cursor: pointer;
+    padding: 10px 10px;
+  }
+  .fa-user:hover + .menu-drop,
+  .menu-drop:hover {
+    opacity: 1;
+    pointer-events: initial;
+    transition: 0.2s;
+  }
+  .menu-user {
+    position: relative;
+  }
+  .menu-drop {
+    position: absolute;
+    top: 30px;
+    right: 20px;
+    background-color: #eee;
+    color: #444;
+    z-index: 100;
+    opacity: 0;
+    transition: 0.3s;
+    pointer-events: none;
+    box-shadow: 0 3px 3px rgba(97, 97, 97, 0.363);
+  }
+  a.drop-link {
+    color: #444;
+  }
+
+  ul {
+    list-style: none;
+
+    .li-item {
+      padding: 10px 20px;
+      display: block;
+
+      &:hover {
+        background-color: #ddd;
+        cursor: pointer;
+      }
+    }
   }
 }

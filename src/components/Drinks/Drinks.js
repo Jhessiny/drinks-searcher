@@ -6,10 +6,7 @@ const Drinks = ({ drinks, surprise, type, favoritesIds, toggleFavorite }) => {
   return (
     <>
       {surprise ? <p className="p-center">Our suggestion for you is:</p> : null}
-      <div
-        className="drinks-list"
-        style={{ justifyContent: surprise ? "center" : "space-between" }}
-      >
+      <div className={`drinks-list ${surprise ? "surprise-drink" : ""}`}>
         {drinks && drinks.length > 0 ? (
           drinks.map((drink) => (
             <Drink
@@ -25,6 +22,18 @@ const Drinks = ({ drinks, surprise, type, favoritesIds, toggleFavorite }) => {
         ) : (
           <p className="p-center">Nothing Found</p>
         )}
+        {(drinks.length + 1) % 3 == 0 ? (
+          <Drink
+            drink={""}
+            name={""}
+            img={""}
+            type={""}
+            favoritesIds={""}
+            key={""}
+            toggleFavorite={""}
+            lastRowDoubleDrink={true}
+          />
+        ) : null}
       </div>
     </>
   );

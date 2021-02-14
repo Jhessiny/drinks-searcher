@@ -1,7 +1,15 @@
 import React, { useState, useEffect } from "react";
 import "./Drink.scss";
 
-const Drink = ({ name, img, drink, type, favoritesIds, toggleFavorite }) => {
+const Drink = ({
+  name,
+  img,
+  drink,
+  type,
+  favoritesIds,
+  toggleFavorite,
+  lastRowDoubleDrink,
+}) => {
   const [ingredients, setIngredients] = useState([]);
 
   useEffect(() => {
@@ -19,7 +27,7 @@ const Drink = ({ name, img, drink, type, favoritesIds, toggleFavorite }) => {
 
   return (
     <div
-      className="drink-box"
+      className={`drink-box ${lastRowDoubleDrink ? "lastRowDoubleDrink" : ""}`}
       onClick={() => toggleFavorite(drink.idDrink, drink.strDrink)}
     >
       <div className={`box-side ${type === "s" ? "front-side" : null}`}>
