@@ -18,7 +18,6 @@ const FavDrink = ({ closePopUp, favDrinkShowed }) => {
     setFavIngredients(ingredientsArray);
   }, [favDrinkShowed]);
 
-  console.log(favDrinkShowed);
   return (
     <div className="popup-background">
       <div className="fav-box">

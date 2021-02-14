@@ -1,5 +1,6 @@
 const Form = (props) => {
-  const { formTitle, click, children } = props;
+  const { formTitle, click, children, changeInput } = props;
+
   return (
     <>
       <i className="fa fa-user fa-login"></i>
@@ -11,32 +12,35 @@ const Form = (props) => {
             type="email"
             placeholder=" "
             name="email"
-            id="email"
-            type="text"
+            id={`${formTitle.toLowerCase()}-email`}
             autoComplete="off"
             required
-            // value={props.emailValue}
+            onChange={(e) => changeInput(e, "email", formTitle.toLowerCase())}
+            value={props.emailValue}
           />
-          <label for="name" class="input-label">
-            <span class="input-label-content">Email</span>
+          <label htmlFor="name" className="input-label">
+            <span className="input-label-content">Email</span>
           </label>
         </div>
+        <p className="p-error">{props.emailError}</p>
         <div className="input-box">
           <input
-            type="password"
             placeholder=" "
             name="password"
-            id="password"
-            type="text"
+            id={`${formTitle.toLowerCase()}-password`}
+            type="password"
             autoComplete="off"
             required
-            // onChange={(e) => changeInput()}
-            // value={props.passValue}
+            onChange={(e) =>
+              changeInput(e, "password", formTitle.toLowerCase())
+            }
+            value={props.passValue}
           />
-          <label for="name" class="input-label">
-            <span class="input-label-content">Password</span>
+          <label htmlFor="name" className="input-label">
+            <span className="input-label-content">Password</span>
           </label>
         </div>
+        <p className="p-error">{props.passwordError}</p>
         {children}
         <input
           className="btn-auth"

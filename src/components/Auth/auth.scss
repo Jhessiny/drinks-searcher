@@ -30,6 +30,7 @@
     font-size: 2rem;
     text-align: center;
     margin-bottom: 15px;
+    font-weight: 400;
   }
   .input-box {
     position: relative;
@@ -61,6 +62,7 @@
     pointer-events: none;
     border-bottom: 1px solid #747474;
     color: #747474;
+    font-size: 1.4rem;
   }
 
   .input-box label::after {
@@ -86,7 +88,7 @@
   .input-box input:focus + .input-label .input-label-content,
   .input-box input:not(:placeholder-shown) + .input-label .input-label-content {
     transform: translateY(-150%);
-    font-size: 14px;
+    font-size: 1.2rem;
     color: #5fa8d3;
   }
 
@@ -101,10 +103,12 @@
     display: inline-block;
     // border: 1px solid #444;
     border: none;
-    background-color: #ddd;
+    background-color: #ebe8e8;
     width: 100%;
     margin-bottom: 10px;
-    padding: 10px;
+    padding: 10px 5px;
+    font-family: inherit;
+    color: #595f6e;
   }
 
   .btn-auth {
@@ -153,6 +157,11 @@
   left: 50%;
   display: block;
   animation: signUpShown 0.5s;
+}
+
+.form-box .p-error {
+  font-size: 1.1rem;
+  color: red;
 }
 
 @keyframes loginHidden {

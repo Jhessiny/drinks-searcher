@@ -33,8 +33,11 @@
   }
 }
 
-// @media (max-width: 720px) {
-//   .drink-box {
-//     width: 100%;
-//   }
-// }
+@media (max-width: 360px) {
+  .drinks-list {
+    padding: 0;
+  }
+  .drink-box {
+    width: 100%;
+  }
+}

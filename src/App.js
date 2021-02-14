@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { BrowserRouter, Route, Switch } from "react-router-dom";
+import firebase from "./firebase";
 
 import { fetchData } from "./api";
 import Auth from "./components/Auth/auth";
@@ -9,48 +10,128 @@ import Header from "./components/Header/Header";
 import User from "./components/User/User";
 
 const App = () => {
+  const [user, setUser] = useState(null);
+  const [emailError, setEmailError] = useState("");
+  const [passwordError, setPasswordError] = useState("");
   const [drinks, setDrinks] = useState({});
   const [search, setSearch] = useState("margarita");
   const [beforeSubmitType, setBeforeSubmitType] = useState("s");
   const [type, setType] = useState("s");
   const [surprise, setSurprise] = useState(false);
   const [isFetching, setIsFetching] = useState(false);
-  const [isAuthenticated, setIsAuthenticated] = useState(true);
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [favoritesIds, setFavoritesIds] = useState([]);
   const [favorites, setFavorites] = useState([]);
+  const [didMount, setDidMount] = useState(false);
 
   useEffect(() => {
+    // console.log("erro:", emailError, passwordError);
+    setDidMount(true);
     const fetchDataApi = async () => {
-      setIsFetching(true);
-      const fetchedData = await fetchData(search, type);
+      if (user) {
+        setIsFetching(true);
+        const fetchedData = await fetchData(search, type);
 
-      setDrinks(fetchedData);
+        setDrinks(fetchedData);
 
-      let fetchedFavorites;
-      axios
-        .get(
-          "https://drinks-search-default-rtdb.firebaseio.com/users/sdsd/drinks.json"
-        )
-        .then((res) => {
-          fetchedFavorites = res.data;
-          let favoritesArray = [];
-          let favoritesIdArray = [];
-          for (let fav in fetchedFavorites) {
-            let newFav = {
-              firebaseId: fav,
-              drinkId: fetchedFavorites[fav].drinkId,
-              drinkName: fetchedFavorites[fav].drinkName,
-            };
-            favoritesArray.push(newFav);
-            favoritesIdArray.push(fetchedFavorites[fav].drinkId);
-          }
-          setFavorites(favoritesArray);
-          setFavoritesIds(favoritesIdArray);
-        });
+        let fetchedFavorites;
+        axios
+          .get(
+            `https://drinks-search-default-rtdb.firebaseio.com/users/${user.uid}/drinks.json`
+          )
+          .then((res) => {
+            fetchedFavorites = res.data;
+            let favoritesArray = [];
+            let favoritesIdArray = [];
+            for (let fav in fetchedFavorites) {
+              let newFav = {
+                firebaseId: fav,
+                drinkId: fetchedFavorites[fav].drinkId,
+                drinkName: fetchedFavorites[fav].drinkName,
+              };
+              favoritesArray.push(newFav);
+              favoritesIdArray.push(fetchedFavorites[fav].drinkId);
+            }
+            setFavorites(favoritesArray);
+            setFavoritesIds(favoritesIdArray);
+          });
+      }
       setSurprise(false);
       setIsFetching(false);
     };
     fetchDataApi();
+  }, [user]);
+
+  const clearInputs = () => {
+    // clearInputsHandler()
+    // setEmail("");
+    // setPassword("");
+  };
+
+  const clearErrors = () => {
+    setEmailError("");
+    setPasswordError("");
+  };
+
+  const loginHandler = (email, password) => {
+    clearErrors();
+    if (didMount) {
+      firebase
+        .auth()
+        .signInWithEmailAndPassword(email, password)
+        .catch((err) => {
+          switch (err.code) {
+            case "auth/invalid-email":
+            case "auth/user-disabled":
+            case "auth/user-not-found":
+              setEmailError(err.message);
+              break;
+            case "auth/wrong-password":
+              setPasswordError(err.message);
+              break;
+          }
+        });
+    }
+  };
+
+  const signupHandler = (email, password, newUser) => {
+    clearErrors();
+    firebase
+      .auth()
+      .createUserWithEmailAndPassword(email, password)
+      .then((user) => {
+        const dbRefUsers = firebase.database().ref("users/" + user.user.uid);
+        dbRefUsers.set(newUser);
+      })
+      .catch((err) => {
+        switch (err.code) {
+          case "auth/email-already-in-use":
+          case "auth/invalid-email":
+            setEmailError(err.message);
+            break;
+          case "auth/weak-password":
+            setPasswordError(err.message);
+            break;
+        }
+      });
+  };
+
+  const authListener = () => {
+    if (firebase) {
+      firebase.auth().onAuthStateChanged((user) => {
+        if (user) {
+          clearInputs();
+          setUser(user);
+          setIsAuthenticated(true);
+        } else {
+          setUser(null);
+        }
+      });
+    }
+  };
+
+  useEffect(() => {
+    authListener();
   }, []);
 
   const changeInput = (e) => {
@@ -96,14 +177,16 @@ const App = () => {
       setFavorites(newFavs);
     } else {
       const newFav = { drinkId: id, drinkName: drinkName };
-      axios
-        .post(
-          `https://drinks-search-default-rtdb.firebaseio.com/users/sdsd/drinks.json/`,
-          newFav
-        )
-        .then((res) => {
-          newFav.firebaseId = res.data;
-        });
+      if (user) {
+        axios
+          .post(
+            `https://drinks-search-default-rtdb.firebaseio.com/users/${user.uid}/drinks.json`,
+            newFav
+          )
+          .then((res) => {
+            newFav.firebaseId = res.data;
+          });
+      }
       const newFavs = [...favorites, newFav];
       const newFavsId = [...favoritesIds, id];
       setFavoritesIds(newFavsId);
@@ -111,17 +194,18 @@ const App = () => {
     }
   };
 
-  const logout = () => {
+  const logoutHandler = () => {
+    firebase.auth().signOut();
     setIsAuthenticated(false);
-  };
-  const login = (e) => {
-    e.preventDefault();
-    setIsAuthenticated(true);
   };
 
   return (
     <BrowserRouter>
-      <Header isAuth={isAuthenticated} logout={logout} />
+      <Header
+        isAuth={isAuthenticated}
+        logout={logoutHandler}
+        curUserUid={user && user.uid}
+      />
 
       <Switch>
         <Route
@@ -148,7 +232,15 @@ const App = () => {
         <Route
           exact
           path="/auth"
-          render={() => <Auth isAuth={isAuthenticated} login={login} />}
+          render={() => (
+            <Auth
+              isAuth={isAuthenticated}
+              loginHandler={loginHandler}
+              signupHandler={signupHandler}
+              emailError={emailError}
+              passwordError={passwordError}
+            />
+          )}
         />
         <Route
           exact
@@ -158,6 +250,7 @@ const App = () => {
               isFetching={isFetching}
               isAuth={isAuthenticated}
               favorites={favorites}
+              curUserUid={user && user.uid}
             />
           )}
         />

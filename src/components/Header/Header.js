@@ -2,7 +2,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 import "./Header.scss";
 
-const Header = ({ isAuth, logout }) => {
+const Header = ({ isAuth, logout, curUserUid }) => {
   return (
     <header>
       <h1>
@@ -19,7 +19,10 @@ const Header = ({ isAuth, logout }) => {
               <div className="menu-drop">
                 <ul>
                   <li>
-                    <Link className="drop-link li-item" to="/user/:id">
+                    <Link
+                      className="drop-link li-item"
+                      to={`/user/${curUserUid}`}
+                    >
                       Profile
                     </Link>
                   </li>
