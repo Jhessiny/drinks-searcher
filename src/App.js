@@ -1,13 +1,14 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { BrowserRouter, Route, Switch } from "react-router-dom";
-import firebase from "./firebase";
 
+import firebase from "./firebase";
 import { fetchData } from "./api";
 import Auth from "./components/Auth/auth";
 import DrinksContainer from "./components/DrinksContainer/DrinksContainer";
 import Header from "./components/Header/Header";
 import User from "./components/User/User";
+import Footer from "./components/Footer/Footer";
 
 const App = () => {
   const [user, setUser] = useState(null);
@@ -25,13 +26,11 @@ const App = () => {
   const [didMount, setDidMount] = useState(false);
 
   useEffect(() => {
-    // console.log("erro:", emailError, passwordError);
     setDidMount(true);
     const fetchDataApi = async () => {
       if (user) {
         setIsFetching(true);
         const fetchedData = await fetchData(search, type);
-
         setDrinks(fetchedData);
 
         let fetchedFavorites;
@@ -61,12 +60,6 @@ const App = () => {
     };
     fetchDataApi();
   }, [user]);
-
-  const clearInputs = () => {
-    // clearInputsHandler()
-    // setEmail("");
-    // setPassword("");
-  };
 
   const clearErrors = () => {
     setEmailError("");
@@ -120,7 +113,6 @@ const App = () => {
     if (firebase) {
       firebase.auth().onAuthStateChanged((user) => {
         if (user) {
-          clearInputs();
           setUser(user);
           setIsAuthenticated(true);
         } else {
@@ -255,6 +247,7 @@ const App = () => {
           )}
         />
       </Switch>
+      <Footer />
     </BrowserRouter>
   );
 };

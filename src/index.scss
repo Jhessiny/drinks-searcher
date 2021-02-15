@@ -14,9 +14,11 @@ html {
 
 body {
   font-size: 1.6rem;
+  position: relative;
+  min-height: 100vh;
 
   .container {
-    max-width: 1100px;
+    max-width: 110rem;
     margin: auto;
   }
 }

@@ -72,3 +72,20 @@ header {
     }
   }
 }
+
+@media (max-width: 450px) {
+  h1 {
+    font-size: 2.5rem;
+  }
+  header {
+    nav {
+      padding-right: 0;
+    }
+    .nav-item {
+      padding: 0 5px;
+    }
+    .menu-drop {
+      right: 10px;
+    }
+  }
+}

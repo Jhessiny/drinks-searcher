@@ -8,9 +8,9 @@
 
   .fav-box {
     background-color: #eee;
-    padding: 20px;
-    width: 620px;
-    min-height: 365;
+    padding: 2rem;
+    width: 62rem;
+    min-height: 36.5rem;
     position: absolute;
     top: 50%;
     left: 50%;
@@ -21,17 +21,17 @@
 
   .close-popup {
     position: absolute;
-    right: 10px;
-    top: 10px;
+    right: 1rem;
+    top: 1rem;
     cursor: pointer;
   }
 
   .fav-img {
-    max-width: 280px;
+    max-width: 28rem;
   }
 
   h2 {
-    margin-top: 10px;
+    margin-top: 1rem;
   }
 
   .fav-left {
@@ -39,7 +39,7 @@
   }
 
   .fav-right {
-    padding: 0 10px 0 20px;
+    padding: 0 1rem 0 2rem;
     font-size: 1.4rem;
   }
 
@@ -58,7 +58,7 @@
 
 @media (max-width: 650px) {
   .popup-background {
-    width: 97vw;
+    width: 100vw;
     min-height: 150vh;
     .fav-box {
       flex-direction: column;
